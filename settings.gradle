@@ -1,0 +1,4 @@
+rootProject.name = 'myrestaurant'
+include 'auth-service'
+include 'rest-service'
+

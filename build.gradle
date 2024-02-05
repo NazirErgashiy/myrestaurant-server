@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+}
+
+java {
+    sourceCompatibility = '17'
+}
+
+subprojects {
+
+    apply plugin: 'java'
+    group = 'uz.pikosolutions'
+
+    sourceCompatibility = 17
+    targetCompatibility = 17
+    version = '0.0.1-SNAPSHOT'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
+        implementation "org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}"
+        implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+        implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
+        implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+        testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
+        testImplementation "org.springframework.security:spring-security-test:${springBootVersion}"
+
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        runtimeOnly "com.h2database:h2:${h2Version}"
+        runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
+    }
+
+    tasks.named('test') {
+        useJUnitPlatform()
+    }
+}
