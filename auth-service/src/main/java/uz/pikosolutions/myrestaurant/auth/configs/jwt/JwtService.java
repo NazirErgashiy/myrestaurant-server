@@ -1,23 +1,20 @@
 package uz.pikosolutions.myrestaurant.auth.configs.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import uz.pikosolutions.myrestaurant.auth.error.exceptions.JwtException;
+import uz.pikosolutions.myrestaurant.auth.entities.User;
+import uz.pikosolutions.service.TokenData;
 
 import java.security.Key;
-import java.time.Instant;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Function;
 
 @Service
 public class JwtService {
@@ -26,60 +23,21 @@ public class JwtService {
     private String secretKey;
 
     @Value("${jwt.token.expiration.time.seconds}")
-    private Long jwtTokenExpirationTime;
+    private int jwtTokenExpirationTime;
 
-    public String extractUsername(String token) {
-        return extractClaims(token, Claims::getSubject);
-    }
-
-    public <T> T extractClaims(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
-    }
-
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-
-        return Jwts
-                .builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(Date.from(Instant.now().plusSeconds(jwtTokenExpirationTime)))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
-                .compact();
-
-    }
-
-    public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
-    }
-
-    private boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
-
-    private Date extractExpiration(String token) {
-        return extractClaims(token, Claims::getExpiration);
-    }
-
-    private Claims extractAllClaims(String token) {
-        try {
-            return Jwts
-                    .parserBuilder()
-                    .setSigningKey(getSigningKey())
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
-        } catch (SignatureException e) {
-            throw new JwtException("Token validation exception");
-        } catch (ExpiredJwtException e) {
-            throw new JwtException("Token validation exception: token expired");
-        }
+    public String getToken(final User user) {
+        final Map<String, Object> tokenData = new HashMap<>();
+        tokenData.put(TokenData.ID.name(), user.getId());
+        tokenData.put(TokenData.LOGIN.name(), user.getLogin());
+        tokenData.put(TokenData.ROLE.name(), user.getRole());
+        tokenData.put(TokenData.CREATE_DATE.name(), new Date().getTime());
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.DATE, jwtTokenExpirationTime);
+        tokenData.put(TokenData.EXPIRATION_DATE.name(), calendar.getTime());
+        JwtBuilder jwtBuilder = Jwts.builder();
+        jwtBuilder.setExpiration(calendar.getTime());
+        jwtBuilder.setClaims(tokenData);
+        return jwtBuilder.signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
     private Key getSigningKey() {

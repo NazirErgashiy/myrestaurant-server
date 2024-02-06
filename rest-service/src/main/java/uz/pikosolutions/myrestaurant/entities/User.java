@@ -1,4 +1,4 @@
-package uz.pikosolutions.myrestaurant.auth.entities;
+package uz.pikosolutions.myrestaurant.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import uz.pikosolutions.service.Role;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +31,7 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(unique = true)
-    private String login;
+    private String name;
 
     @Column
     private String password;
@@ -52,7 +51,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return name;
     }
 
     @Override

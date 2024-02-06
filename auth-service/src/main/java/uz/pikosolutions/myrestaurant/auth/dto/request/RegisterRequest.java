@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class RegisterRequest {
     @Size(min = 3, max = 15, message = "Name size limits [3-15]")
-    private String name;
+    private String login;
     @Size(min = 3, max = 30)
     private String password;
 }

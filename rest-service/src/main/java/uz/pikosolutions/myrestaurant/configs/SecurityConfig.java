@@ -1,9 +1,9 @@
-package uz.pikosolutions.myrestaurant.auth.configs;
+package uz.pikosolutions.myrestaurant.configs;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -14,12 +14,13 @@ import uz.pikosolutions.service.jwt.TokenAuthFilter;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final AuthenticationProvider authenticationProvider;
+
+    private final TokenAuthFilter tokenAuthFilter;
 
     private final AntPathRequestMatcher[] authWhiteList = {
-            new AntPathRequestMatcher("/api/v1/auth/**"),//Unsecure authentication endpoints
             new AntPathRequestMatcher("/swagger-ui/**"),//Unsecure Swagger endpoints...
             new AntPathRequestMatcher("/swagger-ui.html"),
             new AntPathRequestMatcher("/swagger-resources/**"),
@@ -42,7 +43,7 @@ public class SecurityConfig {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authenticationProvider(authenticationProvider);
+                .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

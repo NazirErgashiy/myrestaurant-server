@@ -1,0 +1,18 @@
+server:
+  port: 8090
+spring:
+  main:
+    web-application-type: reactive
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    gateway:
+      routes:
+        - id: AUTH-SERVICE
+          uri: http://localhost:8091
+          predicates:
+           - Path=/api/**
+        - id: REST-SERVICE
+          uri: http://localhost:8092
+          predicates:
+            - Path=/api/**

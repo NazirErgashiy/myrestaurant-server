@@ -23,7 +23,6 @@ subprojects {
     dependencies {
         implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
         implementation "org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}"
-        implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
         implementation "org.springframework.boot:spring-boot-starter-validation:${springBootVersion}"
         implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
         testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
@@ -33,6 +32,13 @@ subprojects {
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         runtimeOnly "com.h2database:h2:${h2Version}"
         runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
+
+        implementation "io.jsonwebtoken:jjwt-api:${jwtVersion}"
+        runtimeOnly "io.jsonwebtoken:jjwt-impl:${jwtVersion}"
+        runtimeOnly "io.jsonwebtoken:jjwt-jackson:${jwtVersion}"
+
+        implementation "jakarta.xml.bind:jakarta.xml.bind-api:2.3.2"
+        implementation "org.glassfish.jaxb:jaxb-runtime:2.3.2"
     }
 
     tasks.named('test') {
