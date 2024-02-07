@@ -1,4 +1,4 @@
-package uz.pikosolutions.myrestaurant.auth.error.exceptions;
+package uz.pikosolutions.service.error.exceptions;
 
 public class JwtException extends RuntimeException{
     public JwtException(String message) {

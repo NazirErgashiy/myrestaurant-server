@@ -13,7 +13,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import uz.pikosolutions.service.jwt.TokenAuthFilter;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -21,6 +21,9 @@ public class SecurityConfig {
     private final TokenAuthFilter tokenAuthFilter;
 
     private final AntPathRequestMatcher[] authWhiteList = {
+            new AntPathRequestMatcher("/**"),//Unsecure all...
+            new AntPathRequestMatcher("/"),//Unsecure all...
+            new AntPathRequestMatcher("/h2/**"),//Unsecure h2 endpoints...
             new AntPathRequestMatcher("/swagger-ui/**"),//Unsecure Swagger endpoints...
             new AntPathRequestMatcher("/swagger-ui.html"),
             new AntPathRequestMatcher("/swagger-resources/**"),
@@ -28,6 +31,7 @@ public class SecurityConfig {
             new AntPathRequestMatcher("/webjars/**")
     };
 
+    /*
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -47,4 +51,5 @@ public class SecurityConfig {
 
         return http.build();
     }
+     */
 }

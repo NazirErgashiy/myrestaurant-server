@@ -1,4 +1,4 @@
-package uz.pikosolutions.myrestaurant.auth.error.dto;
+package uz.pikosolutions.service.error.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

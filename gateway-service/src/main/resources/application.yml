@@ -11,8 +11,12 @@ spring:
         - id: AUTH-SERVICE
           uri: http://localhost:8091
           predicates:
-           - Path=/api/**
+           - Path=/auth-service/**
+          filters:
+            - StripPrefix=1
         - id: REST-SERVICE
           uri: http://localhost:8092
           predicates:
-            - Path=/api/**
+            - Path=/rest-service/**
+          filters:
+            - StripPrefix=1

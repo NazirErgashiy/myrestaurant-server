@@ -42,7 +42,7 @@ public class ApplicationConfig {
 
     @Bean
     public TokenAuthFilter tokenAuthFilter() {
-        TokenAuthFilter tokenAuthFilter = new TokenAuthFilter(tokenService());
+        TokenAuthFilter tokenAuthFilter = new TokenAuthFilter(tokenService(),objectMapper());
         return tokenAuthFilter;
     }
 
@@ -51,5 +51,14 @@ public class ApplicationConfig {
         TokenService tokenService = new TokenService();
         tokenService.setSecretKey(secretKey);
         return tokenService;
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return JsonMapper
+                .builder()
+                .findAndAddModules()
+                .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+                .build();
     }
 }

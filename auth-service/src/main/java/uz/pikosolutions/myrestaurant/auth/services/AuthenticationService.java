@@ -11,7 +11,7 @@ import uz.pikosolutions.myrestaurant.auth.dto.request.AuthenticationRequest;
 import uz.pikosolutions.myrestaurant.auth.dto.request.RegisterRequest;
 import uz.pikosolutions.myrestaurant.auth.dto.response.AuthenticationResponse;
 import uz.pikosolutions.myrestaurant.auth.entities.User;
-import uz.pikosolutions.myrestaurant.auth.error.exceptions.ForbiddenException;
+import uz.pikosolutions.service.error.exceptions.ForbiddenException;
 import uz.pikosolutions.myrestaurant.auth.repositories.UserRepository;
 import uz.pikosolutions.service.Role;
 
