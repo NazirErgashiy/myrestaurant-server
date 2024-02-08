@@ -10,6 +10,7 @@ import uz.pikosolutions.myrestaurant.dto.response.OrderResponse;
 import uz.pikosolutions.myrestaurant.entities.Order;
 
 import javax.validation.constraints.NotNull;
+import java.util.Optional;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order, Long>, PagingAndSortingRepository<Order, Long> {
@@ -19,5 +20,5 @@ public interface OrderRepository extends CrudRepository<Order, Long>, PagingAndS
     Order save(Order order);
 
     @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "user_eg")
-    Order readById(Long id);
+    Optional<Order> readById(Long id);
 }

@@ -1,36 +1,40 @@
-package uz.pikosolutions.myrestaurant.entities;
+package uz.pikosolutions.myrestaurant.entities.auxiliary;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
-import uz.pikosolutions.myrestaurant.entities.auxiliary.OrderDish;
+import uz.pikosolutions.myrestaurant.entities.Dish;
+import uz.pikosolutions.myrestaurant.entities.Order;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "_dish")
-public class Dish {
+@Table(name = "order_dish")
+public class OrderDish {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer cost;
-
     @JsonIgnore
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "dish")
-    private List<OrderDish> orders;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dish_id")
+    private Dish dish;
+
+    @Column(name = "dish_count")
+    private Float count;
 }

@@ -1,8 +1,6 @@
 package uz.pikosolutions.myrestaurant.dto.request;
 
 import lombok.Data;
-import uz.pikosolutions.myrestaurant.entities.Dish;
-import uz.pikosolutions.myrestaurant.entities.User;
 
 import java.util.List;
 
@@ -12,6 +10,5 @@ public class OrderRequest {
     private Integer personsCount;
     private Integer service;
     private Long creator;
-    private List<Long> dishes;
-    private List<Float> dishCount;
+    private List<OrderDishRequest> orderDishes;
 }

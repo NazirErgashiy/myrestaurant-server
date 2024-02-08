@@ -59,6 +59,7 @@ public class ApplicationConfig {
                 .builder()
                 .findAndAddModules()
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
+                .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
                 .build();
     }
 }
