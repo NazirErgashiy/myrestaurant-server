@@ -43,12 +43,6 @@ public class User{
     @Column(unique = true)
     private String name;
 
-    @Column
-    private String password;
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
-
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY, mappedBy = "creator")

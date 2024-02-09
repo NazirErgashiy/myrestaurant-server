@@ -7,8 +7,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import uz.pikosolutions.myrestaurant.auth.entities.User;
 import uz.pikosolutions.service.TokenData;
+import uz.pikosolutions.service.entity.AuthUser;
 
 import java.security.Key;
 import java.util.Calendar;
@@ -25,7 +25,7 @@ public class JwtService {
     @Value("${jwt.token.expiration.time.seconds}")
     private int jwtTokenExpirationTime;
 
-    public String getToken(final User user) {
+    public String getToken(final AuthUser user) {
         final Map<String, Object> tokenData = new HashMap<>();
         tokenData.put(TokenData.ID.name(), user.getId());
         tokenData.put(TokenData.LOGIN.name(), user.getLogin());

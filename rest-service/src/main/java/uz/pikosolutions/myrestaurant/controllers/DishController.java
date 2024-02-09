@@ -17,7 +17,7 @@ import uz.pikosolutions.myrestaurant.entities.Dish;
 import uz.pikosolutions.myrestaurant.services.impl.DishService;
 
 @RestController
-@RequestMapping("/api/v1/dishes")
+@RequestMapping(path = "/api/v1/dishes", produces = "application/json")
 @RequiredArgsConstructor
 public class DishController {
 

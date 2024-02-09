@@ -1,6 +1,9 @@
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
+    runtimeOnly "com.h2database:h2:${h2Version}"
+    runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
     implementation project(':service-client')
+    //implementation project(':auth-service')
 
     annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
     implementation "org.mapstruct:mapstruct:${mapstructVersion}"

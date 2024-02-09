@@ -18,11 +18,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import uz.pikosolutions.myrestaurant.dto.request.OrderRequest;
 import uz.pikosolutions.myrestaurant.dto.response.OrderResponse;
-import uz.pikosolutions.myrestaurant.entities.Order;
 import uz.pikosolutions.myrestaurant.services.impl.OrderService;
 
 @RestController
-@RequestMapping("/api/v1/orders")
+@RequestMapping(path = "/api/v1/orders", produces = "application/json")
 @RequiredArgsConstructor
 public class OrderController {
 

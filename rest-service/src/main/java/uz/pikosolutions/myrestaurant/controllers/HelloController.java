@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/hello", produces = "application/json")
+@RequestMapping(path = "/api/v1/hello", produces = "application/json")
 public class HelloController {
 
     @Secured("ROLE_USER")

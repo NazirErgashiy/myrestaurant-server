@@ -1,4 +1,4 @@
-package uz.pikosolutions.myrestaurant.auth.entities;
+package uz.pikosolutions.service.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "_user")
-public class User implements UserDetails {
+public class AuthUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

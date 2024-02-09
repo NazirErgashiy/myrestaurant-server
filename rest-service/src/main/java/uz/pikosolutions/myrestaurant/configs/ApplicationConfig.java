@@ -12,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.client.RestTemplate;
 import uz.pikosolutions.service.jwt.TokenAuthFilter;
 import uz.pikosolutions.service.jwt.TokenService;
 import uz.pikosolutions.service.listener.ApplicationEventListener;
@@ -42,7 +43,7 @@ public class ApplicationConfig {
 
     @Bean
     public TokenAuthFilter tokenAuthFilter() {
-        TokenAuthFilter tokenAuthFilter = new TokenAuthFilter(tokenService(),objectMapper());
+        TokenAuthFilter tokenAuthFilter = new TokenAuthFilter(tokenService(), objectMapper());
         return tokenAuthFilter;
     }
 
@@ -61,5 +62,11 @@ public class ApplicationConfig {
                 .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
                 .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
                 .build();
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        return restTemplate;
     }
 }

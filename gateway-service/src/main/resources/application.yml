@@ -20,3 +20,6 @@ spring:
             - Path=/rest-service/**
           filters:
             - StripPrefix=1
+      httpclient:
+        pool:
+          max-idle-time: 45

@@ -34,7 +34,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
             jwt = authHeader.substring(7);
             final TokenAuthentication authentication = tokenService.parseAndCheckToken(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            filterChain.doFilter(request, response);
+            //filterChain.doFilter(request, response);
         } catch (Exception e) {
             ExceptionResponse exceptionResponse = ExceptionResponse
                     .builder()

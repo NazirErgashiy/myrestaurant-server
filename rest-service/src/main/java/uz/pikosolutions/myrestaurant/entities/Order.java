@@ -1,6 +1,7 @@
 package uz.pikosolutions.myrestaurant.entities;
 
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 import uz.pikosolutions.myrestaurant.entities.auxiliary.OrderDish;
 
 import javax.persistence.CascadeType;
@@ -18,7 +19,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,20 +32,24 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "persons_count")
     private Integer personsCount;
 
+    @Column(name = "service")
     private Integer service;
 
-    @Transient
-    //@Formula("SELECT (o.service) FROM _order o" +
-    //        "join ORDER_DISH_COUNT c ON o.id = c.order_id")
+    @Column(name = "cost")
+    @Formula(value = "(SELECT SUM(d.cost * c.dish_count / 100 * o.service + d.cost * c.dish_count) FROM _order o " +
+            "join ORDER_DISH c ON o.id = c.order_id " +
+            "join _DISH d ON c.dish_id = d.id " +
+            "WHERE c.order_id = o.id)")
     private Float cost;
 
     @ManyToOne(cascade = {CascadeType.REFRESH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "creator_user_id", nullable = false)
     private User creator;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "order",cascade = {CascadeType.ALL})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order", cascade = {CascadeType.ALL})
     private List<OrderDish> orderDishes;
 
     @Column(name = "create_date")

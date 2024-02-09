@@ -10,10 +10,10 @@ import uz.pikosolutions.myrestaurant.auth.configs.jwt.JwtService;
 import uz.pikosolutions.myrestaurant.auth.dto.request.AuthenticationRequest;
 import uz.pikosolutions.myrestaurant.auth.dto.request.RegisterRequest;
 import uz.pikosolutions.myrestaurant.auth.dto.response.AuthenticationResponse;
-import uz.pikosolutions.myrestaurant.auth.entities.User;
-import uz.pikosolutions.service.error.exceptions.ForbiddenException;
 import uz.pikosolutions.myrestaurant.auth.repositories.UserRepository;
 import uz.pikosolutions.service.Role;
+import uz.pikosolutions.service.entity.AuthUser;
+import uz.pikosolutions.service.error.exceptions.ForbiddenException;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class AuthenticationService {
 
     @Transactional
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
+        var user = AuthUser.builder()
                 .login(request.getLogin())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
