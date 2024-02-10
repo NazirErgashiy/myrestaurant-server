@@ -60,9 +60,9 @@ public class SecurityConfig {
                 .headers()
                 .frameOptions()
                 .disable()
-                //.and()
-                //.sessionManagement()
-                //.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
